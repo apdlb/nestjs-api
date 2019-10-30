@@ -1,0 +1,28 @@
+version: '3'
+services:
+  db:
+    image: mysql:5.7
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: api
+      MYSQL_USER: api
+      MYSQL_PASSWORD: api
+
+  backend:
+    build: ./
+    hostname: backend
+    volumes:
+      - ./:/app/
+    ports:
+      - 3000:3000
+    entrypoint: /bin/sh
+    command: -c "sleep 5 && npm run start:dev"
+    depends_on:
+      - db
+
+volumes:
+  ? db_data
