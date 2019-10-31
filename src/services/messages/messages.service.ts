@@ -12,7 +12,7 @@ export class MessagesService {
     private readonly messageRepository: Repository<Message>,
   ) {}
 
-  async getAll(): Promise<Message[]> {
+  async find(): Promise<Message[]> {
     return await this.messageRepository.find();
   }
 
@@ -24,7 +24,7 @@ export class MessagesService {
     return await this.messageRepository.save(message);
   }
 
-  async get(id: number): Promise<Message> {
+  async findOne(id: number): Promise<Message> {
     return await this.messageRepository.findOne(id);
   }
 

@@ -9,13 +9,9 @@ export class MessagesController {
   constructor(private messagesService: MessagesService) {}
 
   @Get()
-  getAll(
-    @Req() req: Request,
-    @Res() res: Response,
-    @Next() next: NextFunction,
-  ) {
+  find(@Req() req: Request, @Res() res: Response, @Next() next: NextFunction) {
     this.messagesService
-      .getAll()
+      .find()
       .then(data => res.json({ data }))
       .catch(err => next(err));
   }
@@ -34,14 +30,14 @@ export class MessagesController {
   }
 
   @Get(':id')
-  get(
+  findOne(
     @Req() req: Request,
     @Res() res: Response,
     @Next() next: NextFunction,
     @Param('id') id: number,
   ) {
     this.messagesService
-      .get(id)
+      .findOne(id)
       .then(data => res.json({ data }))
       .catch(err => next(err));
   }
