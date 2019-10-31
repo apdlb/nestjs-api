@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { MessagesController } from './controllers/messages/messages.controller';
+import { Message } from './database/entities/message.entity';
 import { MessagesService } from './services/messages/messages.service';
 
 @Module({
@@ -16,6 +17,7 @@ import { MessagesService } from './services/messages/messages.service';
       entities: [__dirname + '/**/**.entity{.ts,.js}'],
       synchronize: true,
     }),
+    TypeOrmModule.forFeature([Message]),
   ],
   controllers: [MessagesController],
   providers: [MessagesService],
