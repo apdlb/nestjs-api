@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Message } from 'src/database/entities/message.entity';
-import { CreateMessageDto } from 'src/dto/create-message.dto';
 import { Repository } from 'typeorm';
+
+import { Message } from '../../database/entities/message.entity';
+import { CreateMessageDto } from '../../dto/create-message.dto';
 
 @Injectable()
 export class MessagesService {
@@ -11,11 +12,11 @@ export class MessagesService {
     private readonly messageRepository: Repository<Message>,
   ) {}
 
-  async getAll() {
+  async getAll(): Promise<Message[]> {
     return await this.messageRepository.find();
   }
 
-  async create(messageDto: CreateMessageDto) {
+  async create(messageDto: CreateMessageDto): Promise<Message> {
     const message = new Message();
     message.nick = messageDto.nick;
     message.message = messageDto.message;
@@ -23,11 +24,11 @@ export class MessagesService {
     return await this.messageRepository.save(message);
   }
 
-  async get(id: number) {
+  async get(id: number): Promise<Message> {
     return await this.messageRepository.findOne(id);
   }
 
-  async update(id: number, messageDto: CreateMessageDto) {
+  async update(id: number, messageDto: CreateMessageDto): Promise<Message> {
     const message = await this.messageRepository.findOne(id);
     message.nick = messageDto.nick;
     message.message = messageDto.message;
@@ -35,7 +36,7 @@ export class MessagesService {
     return await this.messageRepository.save(message);
   }
 
-  async delete(id: number) {
+  async delete(id: number): Promise<any> {
     return await this.messageRepository.delete(id);
   }
 }
