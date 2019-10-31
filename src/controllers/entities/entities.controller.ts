@@ -1,16 +1,16 @@
 import { Body, Controller, Delete, Get, HttpStatus, Next, Param, Post, Put, Req, Res } from '@nestjs/common';
 import { NextFunction, Request, Response } from 'express';
 
-import { CreateMessageDto } from '../../dto/create-message.dto';
-import { MessagesService } from '../../services/messages/messages.service';
+import { CreateEntityDto } from '../../dto/create-entity.dto';
+import { EntitiesService } from '../../services/entities/entities.service';
 
-@Controller('messages')
-export class MessagesController {
-  constructor(private messagesService: MessagesService) {}
+@Controller('entities')
+export class EntitiesController {
+  constructor(private entitiesService: EntitiesService) {}
 
   @Get()
-  find(@Req() req: Request, @Res() res: Response, @Next() next: NextFunction) {
-    this.messagesService
+  find(@Res() res: Response, @Next() next: NextFunction) {
+    this.entitiesService
       .find()
       .then(data => res.json({ data }))
       .catch(err => next(err));
@@ -18,25 +18,23 @@ export class MessagesController {
 
   @Post()
   create(
-    @Req() req: Request,
     @Res() res: Response,
     @Next() next: NextFunction,
-    @Body() createMessageDto: CreateMessageDto,
+    @Body() createEntityDto: CreateEntityDto,
   ) {
-    this.messagesService
-      .create(createMessageDto)
+    this.entitiesService
+      .create(createEntityDto)
       .then(data => res.status(HttpStatus.CREATED).json({ data }))
       .catch(err => next(err));
   }
 
   @Get(':id')
   findOne(
-    @Req() req: Request,
     @Res() res: Response,
     @Next() next: NextFunction,
     @Param('id') id: number,
   ) {
-    this.messagesService
+    this.entitiesService
       .findOne(id)
       .then(data => res.json({ data }))
       .catch(err => next(err));
@@ -44,26 +42,24 @@ export class MessagesController {
 
   @Put(':id')
   update(
-    @Req() req: Request,
     @Res() res: Response,
     @Next() next: NextFunction,
     @Param('id') id: number,
-    @Body() updateMessageDto: CreateMessageDto,
+    @Body() updateEntityDto: CreateEntityDto,
   ) {
-    this.messagesService
-      .update(id, updateMessageDto)
+    this.entitiesService
+      .update(id, updateEntityDto)
       .then(data => res.json({ data }))
       .catch(err => next(err));
   }
 
   @Delete(':id')
   delete(
-    @Req() req: Request,
     @Res() res: Response,
     @Next() next: NextFunction,
     @Param('id') id: number,
   ) {
-    this.messagesService
+    this.entitiesService
       .delete(id)
       .then(() => res.status(HttpStatus.NO_CONTENT).json())
       .catch(err => next(err));

@@ -1,9 +1,9 @@
 import { IsNotEmpty } from 'class-validator';
 
-export class CreateMessageDto {
+export class CreateEntityDto {
   @IsNotEmpty()
   readonly nick: string;
 
   @IsNotEmpty()
-  readonly message: string;
+  readonly entity: string;
 }
