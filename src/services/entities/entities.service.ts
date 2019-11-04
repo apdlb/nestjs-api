@@ -1,40 +1,36 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { plainToClass, plainToClassFromExist } from 'class-transformer';
-import { Repository } from 'typeorm';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { Entity } from 'src/interfaces/entity.interface';
 
-import { Entity } from '../../database/entities/entity.entity';
 import { CreateEntityDto } from '../../dto/create-entity.dto';
 
 @Injectable()
 export class EntitiesService {
   constructor(
-    @InjectRepository(Entity)
-    private readonly entityRepository: Repository<Entity>,
+    @InjectModel('Entity')
+    private readonly entityModel: Model<Entity>,
   ) {}
 
   async find(): Promise<Entity[]> {
-    return await this.entityRepository.find();
+    return await this.entityModel.find();
   }
 
   async create(entityDto: CreateEntityDto): Promise<Entity> {
-    const entity = plainToClass(Entity, entityDto);
-
-    return await this.entityRepository.save(entity);
+    return await this.entityModel.create(entityDto);
   }
 
   async findOne(id: number): Promise<Entity> {
-    return await this.entityRepository.findOne(id);
+    return await this.entityModel.findById(id);
   }
 
   async update(id: number, entityDto: CreateEntityDto): Promise<Entity> {
-    let entity = await this.entityRepository.findOne(id);
-    entity = plainToClassFromExist(entity, entityDto);
-
-    return await this.entityRepository.save(entity);
+    return await this.entityModel.findByIdAndUpdate(id, entityDto, {
+      new: true,
+    });
   }
 
   async delete(id: number): Promise<any> {
-    return await this.entityRepository.delete(id);
+    return await this.entityModel.findByIdAndDelete(id);
   }
 }

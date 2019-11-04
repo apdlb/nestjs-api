@@ -1,28 +1,21 @@
 version: '3'
 services:
-  db:
-    image: mysql:5.7
-    volumes:
-      - db_data:/var/lib/mysql
+  mongodb:
+    image: mongo:latest
+    container_name: 'mongodb'
     ports:
-      - 3306:3306
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: api
-      MYSQL_USER: api
-      MYSQL_PASSWORD: api
+      - 27017:27017
+    command: mongod
 
   backend:
     build: ./
     hostname: backend
     volumes:
       - ./:/app/
+      - .env.docker:/app/.env
     ports:
-      - 3002:3000
+      - 3002:3002
     entrypoint: /bin/sh
     command: -c "sleep 5 && npm run start:dev"
     depends_on:
-      - db
-
-volumes:
-  ? db_data
+      - mongodb
