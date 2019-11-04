@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { plainToClass } from 'class-transformer';
+import { plainToClass, plainToClassFromExist } from 'class-transformer';
 import { Repository } from 'typeorm';
 
 import { Entity } from '../../database/entities/entity.entity';
@@ -29,7 +29,7 @@ export class EntitiesService {
 
   async update(id: number, entityDto: CreateEntityDto): Promise<Entity> {
     let entity = await this.entityRepository.findOne(id);
-    entity = plainToClass(Entity, entityDto);
+    entity = plainToClassFromExist(entity, entityDto);
 
     return await this.entityRepository.save(entity);
   }
