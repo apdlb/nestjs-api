@@ -6,9 +6,9 @@ export class CreateEntityDto {
 
   @IsNumber()
   @IsOptional()
-  readonly field2?: number;
+  readonly field2: number;
 
   @IsBoolean()
   @IsOptional()
-  readonly field3?: boolean;
+  readonly field3: boolean;
 }
