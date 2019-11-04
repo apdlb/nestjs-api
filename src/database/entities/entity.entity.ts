@@ -6,8 +6,11 @@ export class Entity {
   id: number;
 
   @Column()
-  nick: string;
+  field1: string;
 
   @Column()
-  entity: string;
+  field2: number;
+
+  @Column()
+  field3: boolean;
 }

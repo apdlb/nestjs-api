@@ -1,9 +1,19 @@
-import { IsNotEmpty } from 'class-validator';
+import { Exclude, Expose } from 'class-transformer';
+import { IsBoolean, IsNotEmpty, IsNumber, IsOptional } from 'class-validator';
 
+@Exclude()
 export class CreateEntityDto {
+  @Expose()
   @IsNotEmpty()
-  readonly nick: string;
+  readonly field1: string;
 
-  @IsNotEmpty()
-  readonly entity: string;
+  @Expose()
+  @IsNumber()
+  @IsOptional()
+  readonly field2?: number;
+
+  @Expose()
+  @IsBoolean()
+  @IsOptional()
+  readonly field3?: boolean;
 }
