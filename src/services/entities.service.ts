@@ -43,17 +43,17 @@ export class EntitiesService {
     return await this.entityModel.create(entityDto);
   }
 
-  async findOne(id: number): Promise<Entity> {
+  async findOne(id: string): Promise<Entity> {
     return await this.entityModel.findById(id);
   }
 
-  async update(id: number, entityDto: CreateEntityDto): Promise<Entity> {
+  async update(id: string, entityDto: CreateEntityDto): Promise<Entity> {
     return await this.entityModel.findByIdAndUpdate(id, entityDto, {
       new: true,
     });
   }
 
-  async delete(id: number): Promise<any> {
+  async delete(id: string): Promise<any> {
     return await this.entityModel.findByIdAndDelete(id);
   }
 }

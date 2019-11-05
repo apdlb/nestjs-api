@@ -1,5 +1,5 @@
-import { Body, Controller, Delete, Get, HttpStatus, Next, Param, Post, Put, Query, Res } from '@nestjs/common';
-import { NextFunction, Request, Response } from 'express';
+import { Body, Controller, Delete, Get, HttpStatus, Next, Param, Patch, Post, Query, Res } from '@nestjs/common';
+import { NextFunction, Response } from 'express';
 
 import { CreateEntityDto } from '../dto/create-entity.dto';
 import { EntitiesService } from '../services/entities.service';
@@ -32,7 +32,7 @@ export class EntitiesController {
   findOne(
     @Res() res: Response,
     @Next() next: NextFunction,
-    @Param('id') id: number,
+    @Param('id') id: string,
   ) {
     this.entitiesService
       .findOne(id)
@@ -40,11 +40,11 @@ export class EntitiesController {
       .catch(err => next(err));
   }
 
-  @Put(':id')
+  @Patch(':id')
   update(
     @Res() res: Response,
     @Next() next: NextFunction,
-    @Param('id') id: number,
+    @Param('id') id: string,
     @Body() updateEntityDto: CreateEntityDto,
   ) {
     this.entitiesService
@@ -57,7 +57,7 @@ export class EntitiesController {
   delete(
     @Res() res: Response,
     @Next() next: NextFunction,
-    @Param('id') id: number,
+    @Param('id') id: string,
   ) {
     this.entitiesService
       .delete(id)
