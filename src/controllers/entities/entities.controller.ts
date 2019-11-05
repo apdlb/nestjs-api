@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpStatus, Next, Param, Post, Put, Req, Res } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpStatus, Next, Param, Post, Put, Query, Res } from '@nestjs/common';
 import { NextFunction, Request, Response } from 'express';
 
 import { CreateEntityDto } from '../../dto/create-entity.dto';
@@ -9,9 +9,9 @@ export class EntitiesController {
   constructor(private entitiesService: EntitiesService) {}
 
   @Get()
-  find(@Res() res: Response, @Next() next: NextFunction) {
+  find(@Res() res: Response, @Next() next: NextFunction, @Query() query) {
     this.entitiesService
-      .find()
+      .find(query)
       .then(data => res.json({ data }))
       .catch(err => next(err));
   }

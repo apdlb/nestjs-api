@@ -1,5 +1,5 @@
-export interface Entity {
-  field1: String;
-  field2?: Number;
-  field3?: Boolean;
+export interface Entity extends Document {
+  field1: string;
+  field2?: number;
+  field3?: boolean;
 }

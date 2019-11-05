@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { PaginateModel, PaginateResult } from 'mongoose';
 
 import { CreateEntityDto } from '../../dto/create-entity.dto';
 import { Entity } from '../../interfaces/entity.interface';
@@ -9,11 +9,34 @@ import { Entity } from '../../interfaces/entity.interface';
 export class EntitiesService {
   constructor(
     @InjectModel('Entity')
-    private readonly entityModel: Model<Entity>,
+    private readonly entityModel: PaginateModel<Entity>,
   ) {}
 
-  async find(): Promise<Entity[]> {
-    return await this.entityModel.find();
+  async find(query = {} as any): Promise<PaginateResult<Entity>> {
+    const { page, pageSize, sort, order, ...filter } = query;
+
+    const customFilter = filter;
+    // Like operator
+    if (customFilter.field1) {
+      customFilter.field1 = { $regex: `.*${filter.field1}.*` };
+    }
+
+    const options = {} as any;
+    if (sort && order) {
+      options.sort = { [sort]: order };
+    }
+
+    let call;
+    if (page && pageSize) {
+      options.page = page;
+      options.limit = pageSize;
+
+      call = this.entityModel.paginate(customFilter, options);
+    } else {
+      call = this.entityModel.find(customFilter, options);
+    }
+
+    return await call;
   }
 
   async create(entityDto: CreateEntityDto): Promise<Entity> {
