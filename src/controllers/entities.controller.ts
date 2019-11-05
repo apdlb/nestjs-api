@@ -1,8 +1,8 @@
 import { Body, Controller, Delete, Get, HttpStatus, Next, Param, Post, Put, Query, Res } from '@nestjs/common';
 import { NextFunction, Request, Response } from 'express';
 
-import { CreateEntityDto } from '../../dto/create-entity.dto';
-import { EntitiesService } from '../../services/entities/entities.service';
+import { CreateEntityDto } from '../dto/create-entity.dto';
+import { EntitiesService } from '../services/entities.service';
 
 @Controller('entities')
 export class EntitiesController {

@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
 
-import { User } from '../../interfaces/user.interface';
-import CONSTANTS from '../../utils/constants';
+import { User } from '../interfaces/user.interface';
+import CONSTANTS from '../utils/constants';
 
 export type User = any;
 
