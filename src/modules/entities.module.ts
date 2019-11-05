@@ -1,13 +1,12 @@
 import { Module } from '@nestjs/common';
 
-import { EntitiesController } from '../controllers/entities.controller';
 import { entitiesProviders } from '../providers/entities.providers';
+import { EntitiesResolvers } from '../resolvers/entities.resolvers';
 import { EntitiesService } from '../services/entities.service';
 import { DatabaseModule } from './database.module';
 
 @Module({
   imports: [DatabaseModule],
-  controllers: [EntitiesController],
-  providers: [EntitiesService, ...entitiesProviders],
+  providers: [EntitiesResolvers, EntitiesService, ...entitiesProviders],
 })
 export class EntitiesModule {}

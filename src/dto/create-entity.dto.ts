@@ -1,14 +1,16 @@
 import { IsBoolean, IsNotEmpty, IsNumber, IsOptional } from 'class-validator';
 
-export class CreateEntityDto {
+import { CreateEntityInput } from '../graphql';
+
+export class CreateEntityDto extends CreateEntityInput {
   @IsNotEmpty()
-  readonly field1: string;
+  field1: string;
 
   @IsNumber()
   @IsOptional()
-  readonly field2: number;
+  field2: number;
 
   @IsBoolean()
   @IsOptional()
-  readonly field3: boolean;
+  field3: boolean;
 }

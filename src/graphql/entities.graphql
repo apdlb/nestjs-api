@@ -1,0 +1,23 @@
+type Entity {
+  _id: String
+  field1: String
+  field2: Int
+  field3: Boolean
+}
+
+input CreateEntityInput {
+  field1: String
+  field2: Int
+  field3: Boolean
+}
+
+type Query {
+  getEntities(): [Entity]
+  getEntity(id: String!): Entity
+}
+
+type Mutation {
+  createEntity(createEntityInput: CreateEntityInput): Entity
+  updateEntity(id: String!, createEntityInput: CreateEntityInput): Entity
+  deleteEntity(id: String!): Entity
+}

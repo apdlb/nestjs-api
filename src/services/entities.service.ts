@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { PaginateModel, PaginateResult } from 'mongoose';
 
 import { CreateEntityDto } from '../dto/create-entity.dto';
-import { Entity } from '../interfaces/entity.interface';
+import { Entity } from '../graphql';
 import CONSTANTS from '../utils/constants';
 
 @Injectable()
@@ -43,7 +43,7 @@ export class EntitiesService {
     return await this.entityModel.create(entityDto);
   }
 
-  async findOne(id: string): Promise<Entity> {
+  async findOneById(id: string): Promise<Entity> {
     return await this.entityModel.findById(id);
   }
 
