@@ -1,3 +1,5 @@
+import { Document } from 'mongoose';
+
 export interface Entity extends Document {
   field1: string;
   field2?: number;

@@ -1,14 +1,14 @@
-import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
+import { Inject, Injectable } from '@nestjs/common';
 import { PaginateModel, PaginateResult } from 'mongoose';
 
 import { CreateEntityDto } from '../../dto/create-entity.dto';
 import { Entity } from '../../interfaces/entity.interface';
+import CONSTANTS from '../../utils/constants';
 
 @Injectable()
 export class EntitiesService {
   constructor(
-    @InjectModel('Entity')
+    @Inject(CONSTANTS.MODEL_ENTITY)
     private readonly entityModel: PaginateModel<Entity>,
   ) {}
 
