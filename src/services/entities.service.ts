@@ -15,7 +15,7 @@ export class EntitiesService {
   async find(query = {} as any): Promise<PaginateResult<Entity>> {
     const { page, pageSize, sort, order, ...filter } = query;
 
-    const customFilter = filter;
+    const customFilter = Object.assign({}, filter);
     // Like operator
     if (customFilter.field1) {
       customFilter.field1 = { $regex: `.*${filter.field1}.*` };

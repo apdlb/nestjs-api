@@ -6,27 +6,45 @@ import { CreateEntityDto } from '../dto/create-entity.dto';
 import { Entity } from '../graphql';
 import { EntitiesService } from '../services/entities.service';
 
-@Resolver('Entity')
+@Resolver()
 export class EntitiesResolvers {
   constructor(private readonly entitiesService: EntitiesService) {}
 
-  @Query('getEntities')
-  async find() {
+  @Query()
+  async getEntities(): Promise<Entity[]> {
     return await this.entitiesService.find();
   }
 
-  @Query('getEntity')
-  async findOneById(
+  @Query()
+  async getEntitiesPaginated(@Args('filter') filter: any): Promise<any> {
+    return await this.entitiesService.find(filter);
+  }
+
+  @Mutation()
+  async createEntity(
+    @Args('fields') createEntityDto: CreateEntityDto,
+  ): Promise<Entity> {
+    return await this.entitiesService.create(createEntityDto);
+  }
+
+  @Query()
+  async getEntity(
     @Args('id')
     id: string,
   ): Promise<Entity> {
     return await this.entitiesService.findOneById(id);
   }
 
-  @Mutation('createEntity')
-  async create(
-    @Args('createEntityInput') createEntityDto: CreateEntityDto,
+  @Mutation()
+  async updateEntity(
+    @Args('id') id: string,
+    @Args('fields') createEntityDto: CreateEntityDto,
   ): Promise<Entity> {
-    return await this.entitiesService.create(createEntityDto);
+    return await this.entitiesService.update(id, createEntityDto);
+  }
+
+  @Mutation()
+  async deleteEntity(@Args('id') id: string): Promise<any> {
+    return await this.entitiesService.delete(id);
   }
 }

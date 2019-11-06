@@ -19,15 +19,19 @@ export class Entity {
 }
 
 export abstract class IMutation {
-    abstract createEntity(createEntityInput?: CreateEntityInput): Entity | Promise<Entity>;
+    abstract createEntity(fields?: CreateEntityInput): Entity | Promise<Entity>;
 
-    abstract updateEntity(id: string, createEntityInput?: CreateEntityInput): Entity | Promise<Entity>;
+    abstract updateEntity(id: string, fields?: CreateEntityInput): Entity | Promise<Entity>;
 
-    abstract deleteEntity(id: string): Entity | Promise<Entity>;
+    abstract deleteEntity(id: string): string | Promise<string>;
 }
 
 export abstract class IQuery {
-    abstract getEntities(first?: number, offset?: number): Entity[] | Promise<Entity[]>;
+    abstract getEntities(): Entity[] | Promise<Entity[]>;
+
+    abstract getEntitiesPaginated(filter: JSON): JSON | Promise<JSON>;
 
     abstract getEntity(id: string): Entity | Promise<Entity>;
 }
+
+export type JSON = any;
