@@ -1,6 +1,5 @@
-import { ParseIntPipe, UseGuards } from '@nestjs/common';
-import { Args, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
-import { PubSub } from 'graphql-subscriptions';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import * as _ from 'lodash';
 
 import { CreateEntityDto } from '../dto/create-entity.dto';
 import { Entity } from '../graphql';
@@ -17,7 +16,7 @@ export class EntitiesResolvers {
 
   @Query()
   async getEntitiesPaginated(@Args('filter') filter: any): Promise<any> {
-    return await this.entitiesService.find(filter);
+    return await this.entitiesService.find(_.pickBy(filter, _.identity));
   }
 
   @Mutation()
