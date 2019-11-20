@@ -4,8 +4,6 @@ import { Model } from 'mongoose';
 import { User } from '../interfaces/user.interface';
 import CONSTANTS from '../utils/constants';
 
-export type User = any;
-
 @Injectable()
 export class UsersService {
   constructor(
